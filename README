@@ -3,7 +3,9 @@ Spandex MemCache Store
 
 Description:
 
-A enhanced version of and replacement for the MemCacheStore shipping with rails.
+A enhanced version of and replacement for the MemCacheStore shipping with rails.  It uses a 
+per-request local cache to buffer duplicate memcache reads which can result in halving read 
+requests, and it uses a single connection to memcache for both the cache and session stores.
 
 
 Features:
