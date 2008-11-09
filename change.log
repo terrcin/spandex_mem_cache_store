@@ -1,0 +1,7 @@
+Version 0.8
+-----------
+
+* Initial Version
+* Local per request cache
+* Session store re-uses the cache store
+
