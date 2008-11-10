@@ -17,12 +17,16 @@ class SpandexMemCacheStore < ActiveSupport::Cache::Store
     end
     value
   end
+  
+  alias :get :read
 
   # Set key = value. Pass :unless_exist => true if you don't 
   # want to update the cache if the key is already set. 
   def write(key, value, options = nil)
     @memcache_store.write(key, (@hash[key] = value || CACHED_NULL), options)
   end
+  
+  alias :set :write
 
   def delete(key, options = nil)
     @hash[key] = CACHED_NULL
@@ -51,6 +55,7 @@ class SpandexMemCacheStore < ActiveSupport::Cache::Store
   end        
   
   def clear_local
+    # calling @hash.clear is something like 20x slower than just using a new hash
     @hash = Hash.new
   end        
   

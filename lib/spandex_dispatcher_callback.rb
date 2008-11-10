@@ -8,7 +8,7 @@ module SpandexDispatcherCallback
       before_dispatch :clear_local_cache
   
       def clear_local_cache
-        Rails.cache.clear_local
+        Rails.cache.clear_local if Rails.cache.class == SpandexMemCacheStore
       end
     EOF
 
