@@ -12,22 +12,22 @@ Features:
 
 * Local cache used to buffer duplicate gets per request
 
-Standard caching techniques involve reading from the cache within the action to see if the view
-is cached, if not then execute expensive code as the view will need to be rendered.  
+Standard fragment caching techniques involve reading from the cache within the action to see 
+if the view is cached and then again reading the same key from the cache in the view.
 
 There is a rare situation on websites with good levels of traffic where the cache is populated 
 when the action checks, but before the view is executed a separate request expires/deletes 
 that cache entry resulting in the view being rendered rather than pulled from the cache.  In 
-this case the action hasn't does what it's needed todo for the view, so lots of weird errors 
-about instance vars not being nil etc... appear.  This is a very frustrating problem to have 
-once you have figured out whats actually causing it.
+this case the action hasn't done what it's needed to do for the view, so lots of weird errors 
+about instance vars being nil etc... appear.  This is a very frustrating problem to have 
+once you have figured out what is actually causing it.
 
 SpandexMemCacheStore caches the result from the action's cache read and returns that to the 
 view without going to memcache a second time.  This also occurs for session reads, Rails does 
 a minimum of two reads per request, this local caching cuts that down to one.
 
 For a dynamic web 2.0 site which has several layers of fragment caching this can halve the 
-number of reads from memcache per request with a populated cache.
+number of reads from memcache per request with a populated cache.  Thus speeding up the site.
 
 The SpandexMemCacheStore's local cache is cleared before each request is executed.
 
@@ -56,8 +56,13 @@ config.cache_store = :spandex_mem_cache_store, '127.0.0.1', {:namespace => "mywe
 
 Usage:
 
-Nothing new or special yet.  Just drop it in as above and it'll instantly start do the things 
+Nothing new or special yet.  Just drop it in as above and it'll instantly start doing the things 
 described above.
+
+
+Location:
+
+https://github.com/terrcin/spandex_mem_cache_store
 
 
 Requirements:
@@ -70,16 +75,22 @@ Recommended Plugins:
 * XML Cache
 http://code.google.com/p/xmlcache/
 
+Fragment caching for xml :-)
+
 
 Future Plans:
 
+Basically this is the start of me releasing a bunch of work that I've done in this area, I intend 
+to tidy the code up a bit more as time goes buy and include the following:
+
+* TESTS! (I know, not had time, but it is used on at least one live site)
 * Make this a Gem
 * Conditional caching
 * Multi-Get
 * Dynamic key helpers
 * Make the code more awesome
 
-Latest details and dicussion can be found at a dedicated page on my blog:
+Latest details and discussion can be found at a dedicated page on my blog:
 
 www.motionstandingstill.com/spandex-mem-cache-store
 
