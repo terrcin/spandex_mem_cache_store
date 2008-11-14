@@ -47,8 +47,11 @@ through with the caching session store.
 
 Installation:
 
-Install the plugin under vendor/plugins and then in environment.rb within the Initializer area 
-place the following:
+Grab the plugin:
+
+ruby script/plugin install git://github.com/terrcin/spandex_mem_cache_store.git
+
+Then in environment.rb within the Initializer area place the following:
 
 config.action_controller.session_store = :spandex_mem_cache_store
 config.cache_store = :spandex_mem_cache_store, '127.0.0.1', {:namespace => "mywebsite-#{RAILS_ENV}"}
